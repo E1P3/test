@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Google",
-  description: "Search the world's information, including webpages, images, videos and more.",
+  title: "Search",
+  description: "Search the web.",
 };
 
 export default function RootLayout({

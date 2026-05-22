@@ -31,10 +31,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0a0a0a]" style={{ fontFamily: "Arial, sans-serif" }}>
+    <div className="flex flex-col min-h-screen bg-[#ffff00]" style={{ fontFamily: "Arial, sans-serif" }}>
       {/* Top nav */}
       <nav className="flex items-center justify-end px-6 py-3 gap-4">
-        <button className="p-2 rounded-full hover:bg-[#1a1a1a]">
+        <button className="p-2 rounded-full hover:bg-[#e6e600]">
           <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#888]">
             <path d="M6 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM6 14c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM6 20c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
           </svg>
@@ -69,10 +69,10 @@ export default function Home() {
 
         <form onSubmit={handleSearch} className="w-full max-w-[584px] mt-8">
           <div
-            className={`flex items-center gap-3 px-4 py-3 rounded-full border transition-all bg-[#111] ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-full border transition-all bg-[#ffffa0] ${
               focused
                 ? "border-[#00e5ff] shadow-[0_0_14px_rgba(0,229,255,0.45)]"
-                : "border-[#2a2a2a] hover:border-[#00e5ff] hover:shadow-[0_0_10px_rgba(0,229,255,0.25)]"
+                : "border-[#e6e600] hover:border-[#00e5ff] hover:shadow-[0_0_10px_rgba(0,229,255,0.25)]"
             }`}
           >
             <SearchIcon />
@@ -82,7 +82,7 @@ export default function Home() {
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
-              className="flex-1 text-base outline-none text-[#e0e0e0] bg-transparent placeholder-[#444]"
+              className="flex-1 text-base outline-none text-[#171717] bg-transparent placeholder-[#888]"
               placeholder="Search the web..."
               autoComplete="off"
             />
@@ -96,8 +96,8 @@ export default function Home() {
                 ✕
               </button>
             )}
-            <span className="w-px h-6 bg-[#2a2a2a]" />
-            <button type="button" className="hover:bg-[#1a1a1a] rounded-full p-1 transition-colors" aria-label="Search by voice">
+            <span className="w-px h-6 bg-[#e6e600]" />
+            <button type="button" className="hover:bg-[#e6e600] rounded-full p-1 transition-colors" aria-label="Search by voice">
               <MicIcon />
             </button>
           </div>
@@ -106,13 +106,13 @@ export default function Home() {
             <button
               type="submit"
               className="px-4 py-2 text-sm rounded cursor-pointer transition-all border"
-              style={{ color: "#00e5ff", background: "#111", borderColor: "#2a2a2a" }}
+              style={{ color: "#0a0a0a", background: "#ffff00", borderColor: "#e6e600" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "#00e5ff";
                 e.currentTarget.style.boxShadow = "0 0 8px rgba(0,229,255,0.35)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#2a2a2a";
+                e.currentTarget.style.borderColor = "#e6e600";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
@@ -121,13 +121,13 @@ export default function Home() {
             <button
               type="button"
               className="px-4 py-2 text-sm rounded cursor-pointer transition-all border"
-              style={{ color: "#00e5ff", background: "#111", borderColor: "#2a2a2a" }}
+              style={{ color: "#0a0a0a", background: "#ffff00", borderColor: "#e6e600" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "#00e5ff";
                 e.currentTarget.style.boxShadow = "0 0 8px rgba(0,229,255,0.35)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#2a2a2a";
+                e.currentTarget.style.borderColor = "#e6e600";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
@@ -138,8 +138,8 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#0d0d0d] border-t border-[#1a1a1a] text-sm text-[#555]">
-        <div className="px-6 py-3 border-b border-[#1a1a1a]">
+      <footer className="bg-[#ffff00] border-t border-[#e6e600] text-sm text-[#555]">
+        <div className="px-6 py-3 border-b border-[#e6e600]">
           United States
         </div>
         <div className="flex flex-col sm:flex-row sm:justify-between px-6 py-3 gap-2">

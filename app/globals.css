@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffff00;
-  --foreground: #171717;
+  --background: #06060f;
+  --foreground: #e0e0f0;
+  --cyan: #00e5ff;
+  --magenta: #ff2d78;
+  --yellow: #ffe600;
+  --cyan-dim: rgba(0, 229, 255, 0.15);
+  --magenta-dim: rgba(255, 45, 120, 0.15);
 }
 
 @theme inline {
@@ -12,15 +17,193 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffff00;
-    --foreground: #171717;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+}
+
+/* Scanlines overlay */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.18) 2px,
+    rgba(0, 0, 0, 0.18) 4px
+  );
+}
+
+/* Grid bg */
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Glitch title animation */
+@keyframes glitch {
+  0%, 100% { clip-path: none; transform: none; }
+  2%  { clip-path: inset(10% 0 80% 0); transform: translate(-4px, 0); }
+  4%  { clip-path: inset(60% 0 20% 0); transform: translate(4px, 0);  color: var(--magenta); }
+  6%  { clip-path: none; transform: none; color: var(--cyan); }
+  52% { clip-path: inset(40% 0 50% 0); transform: translate(3px, 0); color: var(--yellow); }
+  54% { clip-path: none; transform: none; color: var(--cyan); }
+}
+
+@keyframes glitch-before {
+  0%, 100% { opacity: 0; }
+  2%, 6%   { opacity: 1; clip-path: inset(20% 0 70% 0); transform: translate(6px, 0); color: var(--magenta); }
+  4%       { clip-path: inset(65% 0 10% 0); transform: translate(-6px, 0); }
+  52%, 56% { opacity: 1; clip-path: inset(5% 0 85% 0); transform: translate(-4px, 0); color: var(--yellow); }
+  54%      { opacity: 0; }
+}
+
+.glitch-title {
+  position: relative;
+  display: inline-block;
+  animation: glitch 6s infinite;
+  color: var(--cyan);
+}
+
+.glitch-title::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  animation: glitch-before 6s infinite;
+  color: var(--magenta);
+  pointer-events: none;
+}
+
+/* Neon text glow */
+.neon-cyan {
+  color: var(--cyan);
+  text-shadow: 0 0 8px var(--cyan), 0 0 20px rgba(0, 229, 255, 0.5);
+}
+
+.neon-yellow {
+  color: var(--yellow);
+  text-shadow: 0 0 8px var(--yellow), 0 0 20px rgba(255, 230, 0, 0.5);
+}
+
+.neon-magenta {
+  color: var(--magenta);
+  text-shadow: 0 0 8px var(--magenta), 0 0 20px rgba(255, 45, 120, 0.5);
+}
+
+/* HUD corner brackets */
+.hud-bracket {
+  position: relative;
+}
+.hud-bracket::before,
+.hud-bracket::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--cyan);
+  border-style: solid;
+}
+.hud-bracket::before {
+  top: -4px;
+  left: -4px;
+  border-width: 2px 0 0 2px;
+}
+.hud-bracket::after {
+  bottom: -4px;
+  right: -4px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Angular clip button */
+.cp-btn {
+  position: relative;
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background 0.15s, box-shadow 0.15s, color 0.15s;
+}
+.cp-btn:hover {
+  background: var(--cyan-dim);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.45);
+  color: #fff;
+}
+.cp-btn-yellow {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+.cp-btn-yellow:hover {
+  background: rgba(255, 230, 0, 0.12);
+  box-shadow: 0 0 16px rgba(255, 230, 0, 0.45);
+}
+
+/* Flicker animation for decorative text */
+@keyframes flicker {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.6; }
+  97% { opacity: 1; }
+  98% { opacity: 0.4; }
+  99% { opacity: 1; }
+}
+.flicker {
+  animation: flicker 8s infinite;
+}
+
+/* Pulse dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--cyan); }
+  50% { opacity: 0.3; box-shadow: none; }
+}
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* Search input angular */
+.cp-input-wrap {
+  border: 1px solid var(--cyan);
+  background: rgba(0, 229, 255, 0.05);
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.cp-input-wrap.focused {
+  background: rgba(0, 229, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.3), inset 0 0 10px rgba(0, 229, 255, 0.05);
+}
+.cp-input-wrap input {
+  background: transparent;
+  outline: none;
+  color: var(--foreground);
+  font-family: var(--font-geist-mono), monospace;
+}
+.cp-input-wrap input::placeholder {
+  color: rgba(0, 229, 255, 0.35);
+}
+
+/* Divider lines */
+.cp-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.4;
 }

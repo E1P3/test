@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Search",
-  description: "Search the web.",
+  title: "NIGHT_CITY // SEARCH",
+  description: "Neural-link enhanced web search. Stay wired.",
 };
 
 export default function RootLayout({

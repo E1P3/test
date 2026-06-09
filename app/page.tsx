@@ -19,6 +19,24 @@ function SearchIcon() {
   );
 }
 
+const LUCKY_URLS = [
+  "https://www.theuselessweb.com/",
+  "https://neal.fun/infinite-craft/",
+  "https://orteil.dashnet.org/cookieclicker/",
+  "https://www.fallingfalling.com/",
+  "https://www.windows93.net/",
+  "https://pointerpointer.com/",
+  "https://www.koalastothemax.com/",
+  "https://heavenonearth.io/",
+  "https://www.staggeringbeauty.com/",
+  "https://www.omfgdogs.com/",
+  "https://cat-bounce.com/",
+  "https://www.aquarium.web.id/",
+  "https://weirdorconfusing.com/",
+  "https://papertoilet.com/",
+  "https://www.nyan.cat/",
+];
+
 export default function Home() {
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
@@ -28,6 +46,11 @@ export default function Home() {
     if (query.trim()) {
       window.open(`https://search.brave.com/search?q=${encodeURIComponent(query)}`, "_blank");
     }
+  };
+
+  const handleLucky = () => {
+    const url = LUCKY_URLS[Math.floor(Math.random() * LUCKY_URLS.length)];
+    window.open(url, "_blank");
   };
 
   return (
@@ -120,6 +143,7 @@ export default function Home() {
             </button>
             <button
               type="button"
+              onClick={handleLucky}
               className="px-4 py-2 text-sm rounded cursor-pointer transition-all border"
               style={{ color: "#0a0a0a", background: "#00ff00", borderColor: "#00cc00" }}
               onMouseEnter={(e) => {
@@ -131,7 +155,7 @@ export default function Home() {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              Feeling Lucky
+              I&apos;m Feeling Lucky
             </button>
           </div>
         </form>

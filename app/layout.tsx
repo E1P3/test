@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Search",
-  description: "Search the web.",
+  title: "Mastercard Search",
+  description: "Search the web with Mastercard.",
 };
 
 export default function RootLayout({

@@ -7,10 +7,10 @@ interface Upgrade {
   name: string;
   description: string;
   cost: number;
-  cps: number; // clicks per second added
-  clickBonus: number; // bonus per manual click
+  cps: number;
+  clickBonus: number;
   owned: number;
-  emoji: string;
+  icon: string;
 }
 
 interface Particle {
@@ -34,67 +34,67 @@ interface FloatingText {
 const INITIAL_UPGRADES: Upgrade[] = [
   {
     id: "cursor",
-    name: "Auto-Swipe",
-    description: "Automatic contactless transactions",
+    name: "Auto-Jack",
+    description: "Automated neural injection rig",
     cost: 10,
     cps: 0.1,
     clickBonus: 0,
     owned: 0,
-    emoji: "👆",
+    icon: "⚡",
   },
   {
     id: "bank",
-    name: "Branch Office",
-    description: "Each branch generates passive revenue",
+    name: "Netrunner Rig",
+    description: "ICE-breaking daemon running 24/7",
     cost: 100,
     cps: 0.5,
     clickBonus: 0,
     owned: 0,
-    emoji: "🏦",
+    icon: "💻",
   },
   {
     id: "terminal",
-    name: "POS Terminal",
-    description: "Point-of-sale terminal processes clicks faster",
+    name: "Cyberware Mod",
+    description: "Subdermal chip boosts manual throughput",
     cost: 250,
     cps: 2,
     clickBonus: 1,
     owned: 0,
-    emoji: "💳",
+    icon: "🦾",
   },
   {
     id: "atm",
-    name: "ATM Network",
-    description: "ATMs dispensing clicks 24/7",
+    name: "Black ICE Array",
+    description: "Offensive programs strip data shards",
     cost: 1000,
     cps: 8,
     clickBonus: 2,
     owned: 0,
-    emoji: "🏧",
+    icon: "🔷",
   },
   {
     id: "vault",
-    name: "Secure Vault",
-    description: "Fort Knox-level click storage",
+    name: "Arasaka Infiltrator",
+    description: "Deep-corp exploit harvests shards at scale",
     cost: 5000,
     cps: 25,
     clickBonus: 5,
     owned: 0,
-    emoji: "🔐",
+    icon: "🏯",
   },
   {
     id: "satellite",
-    name: "Global Network",
-    description: "Worldwide payment infrastructure",
+    name: "Orbital Uplink",
+    description: "Megacity-wide signal sweep, mass extraction",
     cost: 20000,
     cps: 100,
     clickBonus: 10,
     owned: 0,
-    emoji: "🛰️",
+    icon: "🛰️",
   },
 ];
 
-const MASTERCARD_COLORS = ["#EB001B", "#FF5F00", "#F79E1B", "#FF8C00"];
+const NEON_COLORS = ["#00e5ff", "#ff2d78", "#ffe600", "#00ff9f", "#bf5af2"];
 
 function formatNumber(n: number): string {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(1) + "B";
@@ -103,23 +103,47 @@ function formatNumber(n: number): string {
   return Math.floor(n).toString();
 }
 
-function MastercardLogo({ size = 80 }: { size?: number }) {
-  const r = size / 2;
-  const overlap = size * 0.25;
+function DataShardIcon({ size = 80, pulsing = false }: { size?: number; pulsing?: boolean }) {
   return (
     <svg
-      width={size + overlap}
+      width={size}
       height={size}
-      viewBox={`0 0 ${size + overlap} ${size}`}
-      style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4))" }}
+      viewBox="0 0 100 100"
+      style={{
+        filter: `drop-shadow(0 0 ${pulsing ? 20 : 12}px #00e5ff) drop-shadow(0 0 ${pulsing ? 40 : 20}px rgba(0,229,255,0.4))`,
+        transition: "filter 0.1s",
+      }}
     >
-      <circle cx={r} cy={r} r={r} fill="#EB001B" opacity="0.95" />
-      <circle cx={r + overlap} cy={r} r={r} fill="#F79E1B" opacity="0.95" />
-      <path
-        d={`M ${r + overlap / 2} ${r - Math.sqrt(r * r - (overlap / 2) * (overlap / 2))} A ${r} ${r} 0 0 1 ${r + overlap / 2} ${r + Math.sqrt(r * r - (overlap / 2) * (overlap / 2))} A ${r} ${r} 0 0 1 ${r + overlap / 2} ${r - Math.sqrt(r * r - (overlap / 2) * (overlap / 2))}`}
-        fill="#FF5F00"
-        opacity="0.9"
+      {/* Hexagonal chip shape */}
+      <polygon
+        points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5"
+        fill="none"
+        stroke="#00e5ff"
+        strokeWidth="2"
       />
+      <polygon
+        points="50,15 80,32.5 80,67.5 50,85 20,67.5 20,32.5"
+        fill="rgba(0,229,255,0.06)"
+        stroke="rgba(0,229,255,0.3)"
+        strokeWidth="1"
+      />
+      {/* Circuit lines */}
+      <line x1="50" y1="15" x2="50" y2="35" stroke="#00e5ff" strokeWidth="1.5" opacity="0.7" />
+      <line x1="50" y1="65" x2="50" y2="85" stroke="#00e5ff" strokeWidth="1.5" opacity="0.7" />
+      <line x1="20" y1="32.5" x2="35" y2="42" stroke="#00e5ff" strokeWidth="1.5" opacity="0.7" />
+      <line x1="65" y1="58" x2="80" y2="67.5" stroke="#00e5ff" strokeWidth="1.5" opacity="0.7" />
+      <line x1="80" y1="32.5" x2="65" y2="42" stroke="#ff2d78" strokeWidth="1.5" opacity="0.7" />
+      <line x1="35" y1="58" x2="20" y2="67.5" stroke="#ff2d78" strokeWidth="1.5" opacity="0.7" />
+      {/* Center core */}
+      <circle cx="50" cy="50" r="12" fill="rgba(0,229,255,0.15)" stroke="#00e5ff" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="5" fill="#00e5ff" opacity="0.9" />
+      {/* Corner dots */}
+      <circle cx="50" cy="15" r="3" fill="#ff2d78" />
+      <circle cx="50" cy="85" r="3" fill="#ff2d78" />
+      <circle cx="80" cy="32.5" r="2" fill="#ffe600" />
+      <circle cx="80" cy="67.5" r="2" fill="#ffe600" />
+      <circle cx="20" cy="32.5" r="2" fill="#ffe600" />
+      <circle cx="20" cy="67.5" r="2" fill="#ffe600" />
     </svg>
   );
 }
@@ -133,6 +157,7 @@ export default function CookiePage() {
   const [isClicking, setIsClicking] = useState(false);
   const [particleId, setParticleId] = useState(0);
   const [floatId, setFloatId] = useState(0);
+  const [glitchActive, setGlitchActive] = useState(false);
 
   const scoreRef = useRef(score);
   const upgradesRef = useRef(upgrades);
@@ -142,7 +167,7 @@ export default function CookiePage() {
   // Load from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("mc-cookie-clicker");
+      const saved = localStorage.getItem("cp-data-shard-clicker");
       if (saved) {
         const data = JSON.parse(saved);
         if (data.score) setScore(data.score);
@@ -150,8 +175,8 @@ export default function CookiePage() {
         if (data.upgrades) {
           setUpgrades((prev) =>
             prev.map((u) => {
-              const saved = data.upgrades.find((s: Upgrade) => s.id === u.id);
-              return saved ? { ...u, owned: saved.owned } : u;
+              const s = data.upgrades.find((d: Upgrade) => d.id === u.id);
+              return s ? { ...u, owned: s.owned } : u;
             })
           );
         }
@@ -164,14 +189,11 @@ export default function CookiePage() {
     const interval = setInterval(() => {
       try {
         localStorage.setItem(
-          "mc-cookie-clicker",
+          "cp-data-shard-clicker",
           JSON.stringify({
             score: scoreRef.current,
             totalClicks,
-            upgrades: upgradesRef.current.map((u) => ({
-              id: u.id,
-              owned: u.owned,
-            })),
+            upgrades: upgradesRef.current.map((u) => ({ id: u.id, owned: u.owned })),
           })
         );
       } catch {}
@@ -182,15 +204,21 @@ export default function CookiePage() {
   // CPS ticker
   useEffect(() => {
     const interval = setInterval(() => {
-      const cps = upgradesRef.current.reduce(
-        (sum, u) => sum + u.cps * u.owned,
-        0
-      );
-      if (cps > 0) {
-        setScore((s) => s + cps / 20);
-      }
+      const cps = upgradesRef.current.reduce((sum, u) => sum + u.cps * u.owned, 0);
+      if (cps > 0) setScore((s) => s + cps / 20);
     }, 50);
     return () => clearInterval(interval);
+  }, []);
+
+  // Random glitch flare
+  useEffect(() => {
+    const t = setInterval(() => {
+      if (Math.random() < 0.15) {
+        setGlitchActive(true);
+        setTimeout(() => setGlitchActive(false), 120);
+      }
+    }, 2000);
+    return () => clearInterval(t);
   }, []);
 
   // Animate particles
@@ -199,13 +227,7 @@ export default function CookiePage() {
     const raf = requestAnimationFrame(() => {
       setParticles((prev) =>
         prev
-          .map((p) => ({
-            ...p,
-            x: p.x + p.vx,
-            y: p.y + p.vy,
-            vy: p.vy + 0.2,
-            life: p.life - 1,
-          }))
+          .map((p) => ({ ...p, x: p.x + p.vx, y: p.y + p.vy, vy: p.vy + 0.2, life: p.life - 1 }))
           .filter((p) => p.life > 0)
       );
     });
@@ -217,22 +239,17 @@ export default function CookiePage() {
     if (floatingTexts.length === 0) return;
     const raf = requestAnimationFrame(() => {
       setFloatingTexts((prev) =>
-        prev
-          .map((t) => ({ ...t, y: t.y - 1.5 }))
-          .filter((t) => t.y > -100)
+        prev.map((t) => ({ ...t, y: t.y - 1.5 })).filter((t) => t.y > -100)
       );
     });
     return () => cancelAnimationFrame(raf);
   }, [floatingTexts]);
 
-  const clickBonus = upgrades.reduce(
-    (sum, u) => sum + u.clickBonus * u.owned,
-    0
-  );
+  const clickBonus = upgrades.reduce((sum, u) => sum + u.clickBonus * u.owned, 0);
   const clickValue = 1 + clickBonus;
   const cps = upgrades.reduce((sum, u) => sum + u.cps * u.owned, 0);
 
-  const handleCookieClick = useCallback(
+  const handleChipClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       const rect = e.currentTarget.getBoundingClientRect();
       const cx = e.clientX - rect.left;
@@ -240,67 +257,53 @@ export default function CookiePage() {
 
       setScore((s) => s + clickValue);
       setTotalClicks((t) => t + 1);
-
       setIsClicking(true);
       setTimeout(() => setIsClicking(false), 120);
 
-      // Spawn particles
-      const newParticles: Particle[] = Array.from({ length: 8 }, (_, i) => {
-        const angle = (Math.PI * 2 * i) / 8 + Math.random() * 0.5;
-        const speed = 2 + Math.random() * 3;
+      const newParticles: Particle[] = Array.from({ length: 10 }, (_, i) => {
+        const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.4;
+        const speed = 2 + Math.random() * 4;
         return {
           id: particleId + i,
           x: cx,
           y: cy,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed - 2,
-          color:
-            MASTERCARD_COLORS[
-              Math.floor(Math.random() * MASTERCARD_COLORS.length)
-            ],
+          color: NEON_COLORS[Math.floor(Math.random() * NEON_COLORS.length)],
           life: 40 + Math.floor(Math.random() * 20),
           maxLife: 60,
         };
       });
-      setParticleId((id) => id + 8);
-      setParticles((prev) => [...prev.slice(-80), ...newParticles]);
+      setParticleId((id) => id + 10);
+      setParticles((prev) => [...prev.slice(-100), ...newParticles]);
 
-      // Floating text
       setFloatingTexts((prev) => [
         ...prev.slice(-10),
-        {
-          id: floatId,
-          x: e.clientX,
-          y: e.clientY,
-          value: clickValue,
-        },
+        { id: floatId, x: e.clientX, y: e.clientY, value: clickValue },
       ]);
       setFloatId((id) => id + 1);
     },
     [clickValue, particleId, floatId]
   );
 
-  const buyUpgrade = useCallback(
-    (id: string) => {
-      setUpgrades((prev) =>
-        prev.map((u) => {
-          if (u.id !== id) return u;
-          const cost = Math.ceil(u.cost * Math.pow(1.15, u.owned));
-          if (scoreRef.current < cost) return u;
-          setScore((s) => s - cost);
-          return { ...u, owned: u.owned + 1 };
-        })
-      );
-    },
-    []
-  );
+  const buyUpgrade = useCallback((id: string) => {
+    setUpgrades((prev) =>
+      prev.map((u) => {
+        if (u.id !== id) return u;
+        const cost = Math.ceil(u.cost * Math.pow(1.15, u.owned));
+        if (scoreRef.current < cost) return u;
+        setScore((s) => s - cost);
+        return { ...u, owned: u.owned + 1 };
+      })
+    );
+  }, []);
 
   const resetGame = () => {
-    if (confirm("Reset all progress?")) {
+    if (confirm("PURGE all neural data? This cannot be undone.")) {
       setScore(0);
       setTotalClicks(0);
       setUpgrades(INITIAL_UPGRADES.map((u) => ({ ...u, owned: 0 })));
-      localStorage.removeItem("mc-cookie-clicker");
+      localStorage.removeItem("cp-data-shard-clicker");
     }
   };
 
@@ -308,85 +311,107 @@ export default function CookiePage() {
     <div
       className="min-h-screen flex flex-col"
       style={{
-        background: "linear-gradient(135deg, #1a0000 0%, #2d0a00 50%, #1a0000 100%)",
-        fontFamily: "Arial, sans-serif",
-        color: "#fff",
+        background: "var(--background)",
+        fontFamily: "var(--font-geist-mono), monospace",
+        color: "var(--foreground)",
       }}
     >
-      {/* Header */}
+      {/* ── Header ── */}
       <header
-        className="flex items-center justify-between px-6 py-4"
+        className="flex items-center justify-between px-6 py-3 z-10 relative"
         style={{
-          background: "rgba(0,0,0,0.4)",
-          borderBottom: "2px solid #EB001B",
+          borderBottom: "1px solid rgba(0,229,255,0.25)",
+          background: "rgba(0,229,255,0.03)",
         }}
       >
         <div className="flex items-center gap-3">
-          <MastercardLogo size={40} />
+          <div
+            className="w-7 h-7 flex items-center justify-center border"
+            style={{ borderColor: "var(--magenta)", boxShadow: "0 0 8px rgba(255,45,120,0.4)" }}
+          >
+            <span style={{ color: "var(--magenta)", fontSize: "9px", fontWeight: 900 }}>NC</span>
+          </div>
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: "#F79E1B" }}>
-              Mastercard Clicker
+            <h1
+              className="text-sm font-black tracking-[0.2em] uppercase"
+              style={{
+                color: "var(--cyan)",
+                textShadow: "0 0 12px rgba(0,229,255,0.6)",
+                transform: glitchActive ? "translateX(2px)" : "none",
+                transition: "transform 0.05s",
+              }}
+            >
+              DATA_SHARD // CLICKER
             </h1>
-            <p className="text-xs" style={{ color: "#FF5F00" }}>
-              Priceless Clicks
+            <p className="text-xs tracking-widest opacity-40" style={{ color: "var(--yellow)" }}>
+              NEURAL_EXTRACTION v2.7 // SHARDS_ONLINE
             </p>
           </div>
         </div>
-        <button
-          onClick={resetGame}
-          className="text-xs px-3 py-1 rounded"
-          style={{
-            background: "rgba(235,0,27,0.2)",
-            border: "1px solid #EB001B",
-            color: "#FF6B6B",
-          }}
-        >
-          Reset
-        </button>
+        <div className="flex items-center gap-3">
+          <a
+            href="/"
+            className="cp-btn"
+            style={{ fontSize: "0.65rem", padding: "0.3rem 0.8rem" }}
+          >
+            ← BACK
+          </a>
+          <button
+            onClick={resetGame}
+            className="cp-btn"
+            style={{
+              fontSize: "0.65rem",
+              padding: "0.3rem 0.8rem",
+              borderColor: "var(--magenta)",
+              color: "var(--magenta)",
+            }}
+          >
+            PURGE
+          </button>
+        </div>
       </header>
 
       <div className="flex flex-1 flex-col lg:flex-row">
-        {/* Main game area */}
-        <main className="flex-1 flex flex-col items-center justify-center py-10 px-4 relative">
+        {/* ── Main game area ── */}
+        <main className="flex-1 flex flex-col items-center justify-center py-10 px-4 relative z-10">
+
           {/* Score display */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 relative">
+            {/* HUD corner decorations */}
+            <div className="absolute -top-4 -left-6 w-4 h-4 border-t-2 border-l-2" style={{ borderColor: "var(--cyan)" }} />
+            <div className="absolute -top-4 -right-6 w-4 h-4 border-t-2 border-r-2" style={{ borderColor: "var(--cyan)" }} />
+            <div className="absolute -bottom-4 -left-6 w-4 h-4 border-b-2 border-l-2" style={{ borderColor: "var(--cyan)" }} />
+            <div className="absolute -bottom-4 -right-6 w-4 h-4 border-b-2 border-r-2" style={{ borderColor: "var(--cyan)" }} />
+
+            <div className="text-xs tracking-[0.3em] uppercase mb-1 opacity-50" style={{ color: "var(--yellow)" }}>
+              ▸ EXTRACTED_SHARDS ◂
+            </div>
             <div
-              className="text-6xl font-bold"
+              className="font-black"
               style={{
-                color: "#F79E1B",
-                textShadow: "0 0 20px rgba(247,158,27,0.6)",
+                fontSize: "clamp(40px, 10vw, 72px)",
+                color: "var(--cyan)",
+                textShadow: "0 0 20px rgba(0,229,255,0.7), 0 0 60px rgba(0,229,255,0.3)",
+                transform: glitchActive ? "translateX(-3px)" : "none",
+                transition: "transform 0.05s",
+                letterSpacing: "-1px",
               }}
             >
               {formatNumber(Math.floor(score))}
             </div>
-            <div className="text-sm mt-1" style={{ color: "#FF5F00" }}>
-              transactions processed
-            </div>
-            <div className="text-xs mt-1" style={{ color: "#888" }}>
-              {cps.toFixed(1)} per second • +{clickValue} per click
-            </div>
-            <div className="text-xs mt-1" style={{ color: "#666" }}>
-              Total: {formatNumber(totalClicks)} manual clicks
+            <div className="cp-divider mt-2 mb-2" />
+            <div className="flex gap-6 justify-center text-xs tracking-widest opacity-60">
+              <span style={{ color: "var(--cyan)" }}>{cps.toFixed(1)}/sec</span>
+              <span style={{ color: "var(--magenta)" }}>+{clickValue}/click</span>
+              <span style={{ color: "var(--yellow)" }}>{formatNumber(totalClicks)} total</span>
             </div>
           </div>
 
-          {/* The big clickable button */}
+          {/* Clickable DataShard */}
           <div className="relative" style={{ isolation: "isolate" }}>
-            {/* Particle canvas overlay */}
-            <div
-              className="absolute inset-0 pointer-events-none overflow-visible"
-              style={{ zIndex: 10 }}
-            >
-              <svg
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  overflow: "visible",
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
+            {/* Particle overlay */}
+            <div className="absolute inset-0 pointer-events-none overflow-visible" style={{ zIndex: 10 }}>
+              <svg style={{ position: "absolute", top: 0, left: 0, overflow: "visible", width: "100%", height: "100%" }}>
                 {particles.map((p) => (
                   <circle
                     key={p.id}
@@ -400,81 +425,76 @@ export default function CookiePage() {
               </svg>
             </div>
 
-            <button
-              onClick={handleCookieClick}
-              className="relative select-none"
+            {/* Outer ring */}
+            <div
               style={{
-                width: 220,
-                height: 220,
+                position: "absolute",
+                inset: -20,
+                borderRadius: "50%",
+                border: `1px solid rgba(0,229,255,${isClicking ? 0.6 : 0.2})`,
+                boxShadow: isClicking ? "0 0 30px rgba(0,229,255,0.3)" : "none",
+                transition: "all 0.1s",
+                pointerEvents: "none",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: -36,
+                borderRadius: "50%",
+                border: `1px solid rgba(255,45,120,${isClicking ? 0.4 : 0.1})`,
+                transition: "all 0.1s",
+                pointerEvents: "none",
+              }}
+            />
+
+            <button
+              onClick={handleChipClick}
+              className="relative select-none flex items-center justify-center"
+              style={{
+                width: 200,
+                height: 200,
                 borderRadius: "50%",
                 background: isClicking
-                  ? "radial-gradient(circle at 40% 40%, #FF8C00, #EB001B)"
-                  : "radial-gradient(circle at 35% 35%, #F79E1B, #FF5F00 40%, #EB001B)",
-                border: "4px solid rgba(255,255,255,0.2)",
+                  ? "radial-gradient(circle at 50% 50%, rgba(0,229,255,0.2), rgba(255,45,120,0.1), transparent)"
+                  : "radial-gradient(circle at 35% 35%, rgba(0,229,255,0.1), rgba(0,0,0,0.5))",
+                border: `2px solid ${isClicking ? "var(--cyan)" : "rgba(0,229,255,0.4)"}`,
                 boxShadow: isClicking
-                  ? "0 0 60px rgba(235,0,27,0.9), 0 0 120px rgba(247,158,27,0.5), inset 0 4px 8px rgba(0,0,0,0.3)"
-                  : "0 0 40px rgba(235,0,27,0.5), 0 0 80px rgba(247,158,27,0.2), inset 0 4px 8px rgba(0,0,0,0.2)",
+                  ? "0 0 50px rgba(0,229,255,0.7), 0 0 100px rgba(0,229,255,0.3), inset 0 0 30px rgba(0,229,255,0.1)"
+                  : "0 0 20px rgba(0,229,255,0.3), inset 0 0 20px rgba(0,229,255,0.05)",
                 transform: isClicking ? "scale(0.95)" : "scale(1)",
-                transition: "transform 0.08s ease, box-shadow 0.08s ease",
+                transition: "transform 0.08s, box-shadow 0.08s, border-color 0.08s",
                 cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
-                gap: 8,
               }}
-              aria-label="Click to earn transactions"
+              aria-label="Extract data shard"
             >
-              {/* Overlapping circles Mastercard motif */}
-              <svg
-                width="120"
-                height="72"
-                viewBox="0 0 120 72"
-                style={{ pointerEvents: "none" }}
-              >
-                <circle cx="36" cy="36" r="36" fill="#EB001B" opacity="0.85" />
-                <circle cx="84" cy="36" r="36" fill="#F79E1B" opacity="0.85" />
-                <ellipse
-                  cx="60"
-                  cy="36"
-                  rx="12"
-                  ry="36"
-                  fill="#FF5F00"
-                  opacity="0.75"
-                />
-              </svg>
-              <span
-                className="text-xs font-bold uppercase tracking-widest"
-                style={{
-                  color: "rgba(255,255,255,0.9)",
-                  textShadow: "0 1px 3px rgba(0,0,0,0.5)",
-                  letterSpacing: "0.15em",
-                }}
-              >
-                Click!
-              </span>
+              <DataShardIcon size={110} pulsing={isClicking} />
             </button>
 
-            {/* Pulse ring */}
+            {/* Click pulse ring */}
             {isClicking && (
               <div
                 style={{
                   position: "absolute",
                   top: "50%",
                   left: "50%",
-                  width: 240,
-                  height: 240,
+                  width: 220,
+                  height: 220,
                   borderRadius: "50%",
-                  border: "2px solid #F79E1B",
+                  border: "2px solid var(--cyan)",
                   transform: "translate(-50%, -50%)",
-                  animation: "pulse-ring 0.4s ease-out forwards",
+                  animation: "cp-pulse-ring 0.4s ease-out forwards",
                   pointerEvents: "none",
                 }}
               />
             )}
           </div>
 
-          {/* Floating texts */}
+          <div className="mt-4 text-xs tracking-[0.3em] uppercase opacity-30" style={{ color: "var(--cyan)" }}>
+            JACK_IN // EXTRACT
+          </div>
+
+          {/* Floating score texts */}
           {floatingTexts.map((t) => (
             <div
               key={t.id}
@@ -483,61 +503,40 @@ export default function CookiePage() {
                 left: t.x,
                 top: t.y,
                 transform: "translate(-50%, -50%)",
-                color: "#F79E1B",
+                color: "var(--cyan)",
                 fontWeight: "bold",
-                fontSize: 18,
+                fontSize: 16,
                 pointerEvents: "none",
-                textShadow: "0 0 8px rgba(235,0,27,0.8)",
+                textShadow: "0 0 8px var(--cyan)",
+                fontFamily: "var(--font-geist-mono), monospace",
                 zIndex: 9999,
               }}
             >
               +{t.value}
             </div>
           ))}
-
-          {/* Stats bar */}
-          <div
-            className="mt-8 flex gap-6 text-center"
-            style={{ color: "#aaa", fontSize: 13 }}
-          >
-            <div>
-              <div style={{ color: "#F79E1B", fontWeight: "bold" }}>
-                {formatNumber(cps)}
-              </div>
-              <div>per sec</div>
-            </div>
-            <div>
-              <div style={{ color: "#F79E1B", fontWeight: "bold" }}>
-                +{clickValue}
-              </div>
-              <div>per click</div>
-            </div>
-            <div>
-              <div style={{ color: "#F79E1B", fontWeight: "bold" }}>
-                {formatNumber(totalClicks)}
-              </div>
-              <div>total clicks</div>
-            </div>
-          </div>
         </main>
 
-        {/* Upgrades sidebar */}
+        {/* ── Upgrades sidebar ── */}
         <aside
-          className="w-full lg:w-80 flex flex-col"
+          className="w-full lg:w-80 flex flex-col z-10"
           style={{
-            background: "rgba(0,0,0,0.4)",
-            borderLeft: "2px solid rgba(235,0,27,0.3)",
+            borderLeft: "1px solid rgba(0,229,255,0.15)",
+            background: "rgba(0,229,255,0.02)",
           }}
         >
+          {/* Sidebar header */}
           <div
-            className="px-4 py-3 font-bold text-sm uppercase tracking-wider"
+            className="px-4 py-3 text-xs font-black uppercase tracking-[0.3em]"
             style={{
-              color: "#F79E1B",
-              borderBottom: "1px solid rgba(235,0,27,0.3)",
+              color: "var(--yellow)",
+              borderBottom: "1px solid rgba(0,229,255,0.15)",
+              background: "rgba(0,229,255,0.03)",
             }}
           >
-            💳 Upgrades
+            ▸ UPGRADE_MODULES
           </div>
+
           <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
             {upgrades.map((u) => {
               const cost = Math.ceil(u.cost * Math.pow(1.15, u.owned));
@@ -547,48 +546,47 @@ export default function CookiePage() {
                   key={u.id}
                   onClick={() => buyUpgrade(u.id)}
                   disabled={!canAfford}
-                  className="w-full text-left rounded-lg p-3 transition-all"
+                  className="w-full text-left transition-all"
                   style={{
                     background: canAfford
-                      ? "linear-gradient(135deg, rgba(235,0,27,0.2), rgba(247,158,27,0.1))"
-                      : "rgba(255,255,255,0.03)",
-                    border: `1px solid ${canAfford ? "#EB001B" : "rgba(255,255,255,0.1)"}`,
+                      ? "rgba(0,229,255,0.07)"
+                      : "rgba(0,229,255,0.02)",
+                    border: `1px solid ${canAfford ? "rgba(0,229,255,0.5)" : "rgba(0,229,255,0.1)"}`,
+                    clipPath: "polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)",
                     cursor: canAfford ? "pointer" : "not-allowed",
-                    opacity: canAfford ? 1 : 0.5,
-                    boxShadow: canAfford
-                      ? "0 0 12px rgba(235,0,27,0.2)"
-                      : "none",
+                    opacity: canAfford ? 1 : 0.45,
+                    boxShadow: canAfford ? "0 0 10px rgba(0,229,255,0.15)" : "none",
+                    padding: "10px 14px",
                   }}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">{u.emoji}</span>
+                      <span className="text-lg">{u.icon}</span>
                       <div>
                         <div
-                          className="font-semibold text-sm"
-                          style={{ color: canAfford ? "#F79E1B" : "#888" }}
+                          className="font-bold text-xs tracking-wider uppercase"
+                          style={{ color: canAfford ? "var(--cyan)" : "#555" }}
                         >
                           {u.name}
                         </div>
-                        <div className="text-xs" style={{ color: "#666" }}>
+                        <div className="text-xs mt-0.5 opacity-50" style={{ color: "var(--foreground)" }}>
                           {u.description}
                         </div>
-                        <div className="text-xs mt-1" style={{ color: "#FF5F00" }}>
+                        <div className="text-xs mt-1 tracking-wide" style={{ color: "var(--magenta)", opacity: 0.8 }}>
                           {u.cps > 0 && `+${u.cps} CPS`}
-                          {u.clickBonus > 0 &&
-                            ` +${u.clickBonus}/click`}
+                          {u.clickBonus > 0 && ` +${u.clickBonus}/click`}
                         </div>
                       </div>
                     </div>
                     <div className="text-right shrink-0">
                       <div
                         className="text-sm font-bold"
-                        style={{ color: canAfford ? "#F79E1B" : "#666" }}
+                        style={{ color: canAfford ? "var(--yellow)" : "#444" }}
                       >
                         {formatNumber(cost)}
                       </div>
-                      <div className="text-xs" style={{ color: "#888" }}>
-                        owned: {u.owned}
+                      <div className="text-xs opacity-40" style={{ color: "var(--cyan)" }}>
+                        ×{u.owned}
                       </div>
                     </div>
                   </div>
@@ -597,25 +595,30 @@ export default function CookiePage() {
             })}
           </div>
 
-          {/* Mastercard branding footer */}
+          {/* Sidebar footer */}
           <div
-            className="p-4 flex flex-col items-center gap-2"
-            style={{ borderTop: "1px solid rgba(235,0,27,0.3)" }}
+            className="px-4 py-3 text-xs"
+            style={{ borderTop: "1px solid rgba(0,229,255,0.1)" }}
           >
-            <MastercardLogo size={36} />
-            <p className="text-xs text-center" style={{ color: "#555" }}>
-              There are some things money can&apos;t buy.
-              <br />
-              For everything else, there&apos;s clicking.
-            </p>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="pulse-dot" />
+              <span className="tracking-widest opacity-40" style={{ color: "var(--yellow)" }}>
+                NIGHT_CITY // NEURAL_NET
+              </span>
+            </div>
+            <div className="cp-divider opacity-20" />
+            <div className="mt-2 flex gap-4 text-xs opacity-30 tracking-widest">
+              <span style={{ color: "var(--cyan)" }}>NODE:NC_77</span>
+              <span style={{ color: "var(--magenta)" }}>ICE:CLEAR</span>
+            </div>
           </div>
         </aside>
       </div>
 
       <style>{`
-        @keyframes pulse-ring {
-          0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-          100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+        @keyframes cp-pulse-ring {
+          0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          100% { opacity: 0; transform: translate(-50%, -50%) scale(1.6); }
         }
       `}</style>
     </div>

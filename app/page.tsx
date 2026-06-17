@@ -36,6 +36,24 @@ const STATUS_LINES = [
   "MEGACITY_NODE_77 // UPTIME: 99.91%",
 ];
 
+const LUCKY_URLS = [
+  "https://www.theuselessweb.com/",
+  "https://neal.fun/infinite-craft/",
+  "https://orteil.dashnet.org/cookieclicker/",
+  "https://www.fallingfalling.com/",
+  "https://www.windows93.net/",
+  "https://pointerpointer.com/",
+  "https://www.koalastothemax.com/",
+  "https://heavenonearth.io/",
+  "https://www.staggeringbeauty.com/",
+  "https://www.omfgdogs.com/",
+  "https://cat-bounce.com/",
+  "https://www.aquarium.web.id/",
+  "https://weirdorconfusing.com/",
+  "https://papertoilet.com/",
+  "https://www.nyan.cat/",
+];
+
 function StatusTicker() {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
@@ -61,9 +79,8 @@ export default function Home() {
   };
 
   const handleLucky = () => {
-    if (query.trim()) {
-      window.open(`https://search.brave.com/search?q=${encodeURIComponent(query)}&lucky=1`, "_blank");
-    }
+    const url = LUCKY_URLS[Math.floor(Math.random() * LUCKY_URLS.length)];
+    window.open(url, "_blank");
   };
 
   return (
